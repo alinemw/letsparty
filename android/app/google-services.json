@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "192873423696",
+    "project_id": "letsparty-f411d",
+    "storage_bucket": "letsparty-f411d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192873423696:android:5e04d11e77674bcbc68255",
+        "android_client_info": {
+          "package_name": "com.letsparty.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192873423696-mkpcb8t6jm0ho7pcfasd1bpqjn7ejt6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXHDHPSBXq9Xj8sCbEZQz_eeSS5pFwmiA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192873423696-mkpcb8t6jm0ho7pcfasd1bpqjn7ejt6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
