@@ -14,8 +14,8 @@ class GetMyEvent extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     CollectionReference events = FirebaseFirestore.instance.collection('events');
 
-    formatEventDate(Timestamp givenTimeStamp) {
-      final DateTime dateTime = givenTimeStamp.toDate();
+    formatEventDate(int givenTimeStamp) {
+      DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(givenTimeStamp);
       return DateFormat('dd/MM/yyyy HH:mm').format(dateTime);
     }
 

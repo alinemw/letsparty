@@ -1,20 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lets_party/components/styled_button.dart';
 import 'package:lets_party/components/styled_text_field.dart';
 
 class AddEventPagePage extends StatefulWidget {
-  final Function()? onTap;
-  const AddEventPagePage({super.key, required this.onTap});
+  const AddEventPagePage({super.key});
 
   @override
   State<AddEventPagePage> createState() => _AddEventPagePageState();
 }
 
 class _AddEventPagePageState extends State<AddEventPagePage> {
+  final user = FirebaseAuth.instance.currentUser;
+
   final eventNameController = TextEditingController();
   final eventDateController = TextEditingController();
 
-  void addEvent() async {
+  Future addEvent() async {
     showDialog(
         context: context,
         builder: (context) {
@@ -22,13 +25,28 @@ class _AddEventPagePageState extends State<AddEventPagePage> {
             child: CircularProgressIndicator(),
           );
         });
-    try {
+    if (user == null) {
+      showErrorMessage('Você precisa entrar para a turma primeiro!');
+    } else if (eventNameController.text == '') {
+      showErrorMessage('Que tipo de evento não merece um nome?');
+    } else if (eventDateController.text == '') {
+      showErrorMessage('Legal... mas quando?');
+    } else {
+      DateTime dateTime = DateTime.parse(eventDateController.text);
 
-      Navigator.pop(context);
-    } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
-      showErrorMessage(e.code);
+      await FirebaseFirestore.instance.collection('events').add({
+        'user': user!.email!,
+        'eventName': eventNameController.text,
+        'eventDate': dateTime.microsecondsSinceEpoch,
+      });
     }
+
+    Navigator.pop(context);
+    goToHome();
+  }
+
+  void goToHome(){
+    Navigator.pop(context,true);
   }
 
   void showErrorMessage(String message) {
@@ -77,8 +95,12 @@ class _AddEventPagePageState extends State<AddEventPagePage> {
                           controller: eventDateController,
                           hintText: 'Data e Hora',
                           obscureText: false,
-
                         ),
+
+                        const SizedBox(height: 50),
+                        StyledButton(onTap: addEvent, text: 'Adicionar!'),
+                        const SizedBox(height: 10),
+                        StyledButton(onTap: goToHome, text: 'Desistir!'),
                       ],
                     ))
             )

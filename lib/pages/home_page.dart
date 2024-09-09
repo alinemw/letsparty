@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lets_party/pages/add_event_page.dart';
 import 'package:lets_party/read/get_my_event.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,17 +28,28 @@ class _HomePageState extends State<HomePage> {
         );
   }
 
+  Future eventGiveUp(String documentId) async {
+     FirebaseFirestore.instance.collection('events').doc(documentId).delete()
+        .then((snapshot) => myEventsId.remove(documentId)
+    );
+  }
+
   void signOut() {
     FirebaseAuth.instance.signOut();
+  }
+  
+  void goToNewEvent(){
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddEventPagePage()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(
-      backgroundColor: Colors.black87,
-      actions: [IconButton(onPressed: signOut, icon: const Icon(Icons.logout))],
-    ),
+      appBar: AppBar(
+        backgroundColor: Colors.black87,
+        actions: [IconButton(onPressed: signOut, icon: const Icon(Icons.logout))],
+      ),
+      backgroundColor: Colors.grey[300],
       body: Center(
         child: Column(
           children: [
@@ -47,12 +59,14 @@ class _HomePageState extends State<HomePage> {
                   builder: (context, snapshot) {
                     return ListView.builder(
                       itemCount: myEventsId.length,
+
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListTile(
                             tileColor: Colors.grey[200],
                             title: GetMyEvent(documentId: myEventsId[index]),
+                            onLongPress: () async => await eventGiveUp(myEventsId[index])
                           ),
                         );
                       },
@@ -65,10 +79,9 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
         backgroundColor: Colors.black87,
+        onPressed: goToNewEvent,
         foregroundColor: Colors.yellow,
-        elevation: 0,
         shape: const CircleBorder(),
         child: const Icon(Icons.add),
       ),
