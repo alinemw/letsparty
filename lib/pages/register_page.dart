@@ -67,7 +67,7 @@ class _RegisterPageState extends State<RegisterPage> {
         backgroundColor: Colors.grey[300],
         body: SafeArea(
             child: Center(
-                child: new SingleChildScrollView(
+                child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -85,19 +85,19 @@ class _RegisterPageState extends State<RegisterPage> {
                             )
                         ),
                         const SizedBox(height: 25),
-                        Styledtextfield(
+                        StyledTextField(
                           controller: emailController,
                           hintText: 'Email',
                           obscureText: false,
                         ),
                         const SizedBox(height: 10),
-                        Styledtextfield(
+                        StyledTextField(
                           controller: passwordController,
                           hintText: 'Password',
                           obscureText: true,
                         ),
                         const SizedBox(height: 10),
-                        Styledtextfield(
+                        StyledTextField(
                           controller: confirmPasswordController,
                           hintText: 'Confirm Password',
                           obscureText: true,

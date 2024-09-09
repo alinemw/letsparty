@@ -69,7 +69,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             ),
           ),
           const SizedBox(height: 10),
-          Styledtextfield(
+          StyledTextField(
             controller: emailController,
             hintText: 'Email',
             obscureText: false,

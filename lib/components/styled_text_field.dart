@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Styledtextfield extends StatelessWidget {
+class StyledTextField extends StatelessWidget {
 
   final controller;
   final String hintText;
   final bool obscureText;
 
-  const Styledtextfield({
+  const StyledTextField({
     super.key,
     required this.controller,
     required this.hintText,
